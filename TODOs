@@ -1,0 +1,7 @@
+- kick functionality
+- castling
+- en passant for kick() and covered_spots()
+- stalemate
+- promotion
+- check
+- kings arent allowed to cuddle
