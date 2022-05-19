@@ -21,8 +21,7 @@ class Knight(Piece):
         (self.posX - 1, self.posY - 2), (self.posX - 2, self.posY - 1)}
         # now remove the invalid ones
         for tmp in res:
-            if (tmp[0] < 0 or tmp[0] > 7 or tmp[1] < 0 or tmp[1] > 7 or
-                (board[tmp[0]][tmp[1]] != None and board[tmp[0]][tmp[1]].colour == self.colour)):
+            if (tmp[0] < 0 or tmp[0] > 7 or tmp[1] < 0 or tmp[1] > 7):
                 res.remove(tmp)
         return res
         

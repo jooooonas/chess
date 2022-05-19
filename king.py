@@ -37,9 +37,6 @@ class King(Piece):
                     res.add(self.posX + 1 - i, self.posY + 1 - j)
             # remove spot where king is on
             res.remove(self.posX, self.posY)
-        for tmp in res:
-            if board[tmp[0]][tmp[1]] != None and board[tmp[0]][tmp[1]].colour == self.colour:
-                res.remove(tmp)
         return res
         
     def __repr__(self):
