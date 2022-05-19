@@ -1,5 +1,9 @@
-from piece import covered_spots
+from piece import Piece
 
+# creating a dict mapping from field to piece, whenever the piece covers this field
+# board: chess board from which the dict is created
+# colour: colour of attacker
+# return value: tuple of dict for attacking player and dict for defending player
 def create_check_dict(board, colour):
     dict1 = {}
     dict2 = {}
@@ -13,7 +17,9 @@ def create_check_dict(board, colour):
                 dict2.update({board[j][i], dict2.get(board[j][i]).union(set)})
     return (dict1, dict2)
 
-def update_dict(board, piece)
+# Dont forget to delete piece from dict when kicking
+def update_dict(board, piece, oldX, oldY, check_dict):
+    
 
 # chess_board: 2D array of chesspieces
 # check_board: 2D array of all spots which are covered

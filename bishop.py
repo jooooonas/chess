@@ -17,6 +17,8 @@ class Bishop(Piece):
         for i in range(min(self.posX, 7 - self.posY)):
             if board[self.posX - 1 - i][self.posY + i + 1] == None:
                 res.add((self.posX - 1 - i, self.posY + i + 1))
+            elif board[self.posX - 1 - i][self.posY + i + 1].colour == self.colour:
+                break
             else:
                 res.add((self.posX - 1 - i, self.posY + i + 1))
                 break
@@ -24,6 +26,8 @@ class Bishop(Piece):
         for i in range(min(7 - self.posX, 7 - self.posY)):
             if board[self.posX + i + 1][self.posY + i + 1] == None:
                 res.add((self.posX + i + 1, self.posY + i + 1))
+            elif board[self.posX + i + 1][self.posY + i + 1].colour == self.colour:
+                break
             else:
                 res.add((self.posX + i + 1, self.posY + i + 1))
                 break
@@ -31,6 +35,8 @@ class Bishop(Piece):
         for i in range(min(7 - self.posX, self.posY)):
             if board[self.posX + i + 1][self.posY - i - 1] == None:
                 res.add((self.posX + i + 1, self.posY - i - 1))
+            elif board[self.posX + i + 1][self.posY - i - 1].colour == self.colour:
+                break
             else:
                 res.add((self.posX + i + 1, self.posY - i - 1))
                 break
@@ -38,6 +44,8 @@ class Bishop(Piece):
         for i in range(min(self.posX, self.posY)):
             if board[self.posX - i - 1][self.posY - i - 1] == None:
                 res.add((self.posX - i - 1, self.posY - i - 1))
+            elif board[self.posX - i - 1][self.posY - i - 1].colour == self.colour:
+                break
             else:
                 res.add((self.posX - i - 1, self.posY - i - 1))
                 break

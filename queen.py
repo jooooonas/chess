@@ -19,6 +19,8 @@ class Queen(Piece):
         for i in range(self.posX):
             if board[self.posX - i - 1][self.posY] == None:
                 res.add((self.posX - i - 1, self.posY))
+            elif board[self.posX - i - 1][self.posY].colour == self.colour:
+                break
             else:
                 res.add((self.posX - i - 1, self.posY))
                 break
@@ -26,6 +28,8 @@ class Queen(Piece):
         for i in range(7 - self.posX):
             if board[self.posX + i + 1][self.posY] == None:
                 res.add((self.posX + i + 1, self.posY))
+            elif board[self.posX + i + 1][self.posY].colour == self.colour:
+                break
             else:
                 res.add((self.posX + i + 1, self.posY))
                 break
@@ -33,6 +37,8 @@ class Queen(Piece):
         for i in range(self.posY):
             if board[self.posX][self.posY - i - 1] == None:
                 res.add((self.posX, self.posY - i - 1))
+            elif board[self.posX][self.posY - i - 1].colour == self.colour:
+                break
             else:
                 res.add((self.posX, self.posY - i - 1))
                 break
@@ -40,6 +46,8 @@ class Queen(Piece):
         for i in range(7 - self.posY):
             if board[self.posX][self.posY + i + 1] == None:
                 res.add((self.posX, self.posY + i + 1))
+            elif board[self.posX][self.posY + i + 1].colour == self.colour:
+                break
             else:
                 res.add((self.posX, self.posY + i + 1))
                 break
@@ -47,6 +55,8 @@ class Queen(Piece):
         for i in range(min(self.posX, 7 - self.posY)):
             if board[self.posX - 1 - i][self.posY + i + 1] == None:
                 res.add((self.posX - 1 - i, self.posY + i + 1))
+            elif board[self.posX - 1 - i][self.posY + i + 1].colour == self.colour:
+                break
             else:
                 res.add((self.posX - 1 - i, self.posY + i + 1))
                 break
@@ -54,6 +64,8 @@ class Queen(Piece):
         for i in range(min(7 - self.posX, 7 - self.posY)):
             if board[self.posX + i + 1][self.posY + i + 1] == None:
                 res.add((self.posX + i + 1, self.posY + i + 1))
+            elif board[self.posX + i + 1][self.posY + i + 1].colour == self.colour:
+                break
             else:
                 res.add((self.posX + i + 1, self.posY + i + 1))
                 break
@@ -61,6 +73,8 @@ class Queen(Piece):
         for i in range(min(7 - self.posX, self.posY)):
             if board[self.posX + i + 1][self.posY - i - 1] == None:
                 res.add((self.posX + i + 1, self.posY - i - 1))
+            elif board[self.posX + i + 1][self.posY - i - 1].colour == self.colour:
+                break
             else:
                 res.add((self.posX + i + 1, self.posY - i - 1))
                 break
@@ -68,6 +82,8 @@ class Queen(Piece):
         for i in range(min(self.posX, self.posY)):
             if board[self.posX - i - 1][self.posY - i - 1] == None:
                 res.add((self.posX - i - 1, self.posY - i - 1))
+            elif board[self.posX - i - 1][self.posY - i - 1].colour == self.colour:
+                break
             else:
                 res.add((self.posX - i - 1, self.posY - i - 1))
                 break
