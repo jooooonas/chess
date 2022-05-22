@@ -13,30 +13,31 @@ class King(Piece):
     def kick(self, x, y, board):
         print("I'm a stub")
 
-    def covered_spots(self, board):
+    @staticmethod
+    def covered_spots(posX, posY, board):
         res = set()
-        if self.posX == 7 and self.posY == 7:
+        if posX == 7 and posY == 7:
             res = {(6, 7), (6, 6), (7, 6)}
-        elif self.posX == 7 and self.posY == 0:
+        elif posX == 7 and posY == 0:
             res = {(6, 0), (6, 1), (7, 1)}
-        elif self.posX == 0 and self.posY == 7:
+        elif posX == 0 and posY == 7:
             res = {(1, 7), (1, 6), (0, 6)}
-        elif self.posX == 0 and self.posY == 0:
+        elif posX == 0 and posY == 0:
             res = {(1, 0), (1, 1), (0, 1)}
-        elif self.posX == 7:
-            res = {(7, self.posY - 1), (7, self.posY + 1), (6, self.posY - 1), (6, self.posY), (6, self.posY - 1)}
-        elif self.posX == 0:
-            res = {(0, self.posY - 1), (0, self.posY + 1), (1, self.posY - 1), (1, self.posY), (1, self.posY - 1)}
-        elif self.posY == 7:
-            res = {(self.posX - 1, 7), (self.posX + 1, 7), (self.posX - 1, 6), (self.posX, 6), (self.posX + 1, 6)}
-        elif self.posY == 0:
-            res = {(self.posX - 1, 0), (self.posX + 1, 0), (self.posX - 1, 1), (self.posX, 1), (self.posX + 1, 1)}
+        elif posX == 7:
+            res = {(7, posY - 1), (7, posY + 1), (6, posY - 1), (6, posY), (6, posY - 1)}
+        elif posX == 0:
+            res = {(0, posY - 1), (0, posY + 1), (1, posY - 1), (1, posY), (1, posY - 1)}
+        elif posY == 7:
+            res = {(posX - 1, 7), (posX + 1, 7), (posX - 1, 6), (posX, 6), (posX + 1, 6)}
+        elif posY == 0:
+            res = {(posX - 1, 0), (posX + 1, 0), (posX - 1, 1), (posX, 1), (posX + 1, 1)}
         else:
             for i in range(3):
                 for j in range(3):
-                    res.add(self.posX + 1 - i, self.posY + 1 - j)
+                    res.add(posX + 1 - i, posY + 1 - j)
             # remove spot where king is on
-            res.remove(self.posX, self.posY)
+            res.remove(posX, posY)
         return res
         
     def __repr__(self):

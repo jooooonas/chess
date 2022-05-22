@@ -11,35 +11,36 @@ class Bishop(Piece):
     def kick(self, x, y, board):
         print("I'm a stub")
 
-    def covered_spots(self, board):
+    @staticmethod
+    def covered_spots(posX, posY, board):
         res = set()
         # left-up
-        for i in range(min(self.posX, 7 - self.posY)):
-            if board[self.posX - 1 - i][self.posY + i + 1] == None:
-                res.add((self.posX - 1 - i, self.posY + i + 1))
+        for i in range(min(posX, 7 - posY)):
+            if board[posX - 1 - i][posY + i + 1] == None:
+                res.add((posX - 1 - i, posY + i + 1))
             else:
-                res.add((self.posX - 1 - i, self.posY + i + 1))
+                res.add((posX - 1 - i, posY + i + 1))
                 break
         # right-up
-        for i in range(min(7 - self.posX, 7 - self.posY)):
-            if board[self.posX + i + 1][self.posY + i + 1] == None:
-                res.add((self.posX + i + 1, self.posY + i + 1))
+        for i in range(min(7 - posX, 7 - posY)):
+            if board[posX + i + 1][posY + i + 1] == None:
+                res.add((posX + i + 1, posY + i + 1))
             else:
-                res.add((self.posX + i + 1, self.posY + i + 1))
+                res.add((posX + i + 1, posY + i + 1))
                 break
         # right-down
-        for i in range(min(7 - self.posX, self.posY)):
-            if board[self.posX + i + 1][self.posY - i - 1] == None:
-                res.add((self.posX + i + 1, self.posY - i - 1))
+        for i in range(min(7 - posX, posY)):
+            if board[posX + i + 1][posY - i - 1] == None:
+                res.add((posX + i + 1, posY - i - 1))
             else:
-                res.add((self.posX + i + 1, self.posY - i - 1))
+                res.add((posX + i + 1, posY - i - 1))
                 break
         # left-down
-        for i in range(min(self.posX, self.posY)):
-            if board[self.posX - i - 1][self.posY - i - 1] == None:
-                res.add((self.posX - i - 1, self.posY - i - 1))
+        for i in range(min(posX, posY)):
+            if board[posX - i - 1][posY - i - 1] == None:
+                res.add((posX - i - 1, posY - i - 1))
             else:
-                res.add((self.posX - i - 1, self.posY - i - 1))
+                res.add((posX - i - 1, posY - i - 1))
                 break
         return res
         

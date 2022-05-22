@@ -13,12 +13,13 @@ class Knight(Piece):
     def kick(self, x, y, board):
         print("I'm a stub")
 
-    def covered_spots(self, board):
+    @staticmethod
+    def covered_spots(posX, posY, board):
         # add all coordinates and remove the ones out of the board or the one covering your team
-        res = {(self.posX - 2, self.posY + 1), (self.posX - 1, self.posY + 2),
-        (self.posX + 1, self.posY + 2), (self.posX + 2, self.posY + 1),
-        (self.posX + 2, self.posY - 1), (self.posX + 1, self.posY - 2),
-        (self.posX - 1, self.posY - 2), (self.posX - 2, self.posY - 1)}
+        res = {(posX - 2, posY + 1), (posX - 1, posY + 2),
+        (posX + 1, posY + 2), (posX + 2, posY + 1),
+        (posX + 2, posY - 1), (posX + 1, posY - 2),
+        (posX - 1, posY - 2), (posX - 2, posY - 1)}
         # now remove the invalid ones
         for tmp in res:
             if (tmp[0] < 0 or tmp[0] > 7 or tmp[1] < 0 or tmp[1] > 7):

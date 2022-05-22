@@ -79,7 +79,7 @@ class Piece(ABC):
 
     # returns set of coordinates of spots that are covered by this piece
     @abstractmethod
-    def covered_spots(self, board):
+    def covered_spots(posX, posY, board):
         pass
 
     @staticmethod

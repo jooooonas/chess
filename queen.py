@@ -13,63 +13,64 @@ class Queen(Piece):
             # or valid diagonale move?
             super().check_move_diagonale(x, y, board)))
 
-    def covered_spots(self, board):
+    @staticmethod
+    def covered_spots(posX, posY, board):
         res = set()
         # left direction
-        for i in range(self.posX):
-            if board[self.posX - i - 1][self.posY] == None:
-                res.add((self.posX - i - 1, self.posY))
+        for i in range(posX):
+            if board[posX - i - 1][posY] == None:
+                res.add((posX - i - 1, posY))
             else:
-                res.add((self.posX - i - 1, self.posY))
+                res.add((posX - i - 1, posY))
                 break
         # right direction
-        for i in range(7 - self.posX):
-            if board[self.posX + i + 1][self.posY] == None:
-                res.add((self.posX + i + 1, self.posY))
+        for i in range(7 - posX):
+            if board[posX + i + 1][posY] == None:
+                res.add((posX + i + 1, posY))
             else:
-                res.add((self.posX + i + 1, self.posY))
+                res.add((posX + i + 1, posY))
                 break
         # down
-        for i in range(self.posY):
-            if board[self.posX][self.posY - i - 1] == None:
-                res.add((self.posX, self.posY - i - 1))
+        for i in range(posY):
+            if board[posX][posY - i - 1] == None:
+                res.add((posX, posY - i - 1))
             else:
-                res.add((self.posX, self.posY - i - 1))
+                res.add((posX, posY - i - 1))
                 break
         # up
-        for i in range(7 - self.posY):
-            if board[self.posX][self.posY + i + 1] == None:
-                res.add((self.posX, self.posY + i + 1))
+        for i in range(7 - posY):
+            if board[posX][posY + i + 1] == None:
+                res.add((posX, posY + i + 1))
             else:
-                res.add((self.posX, self.posY + i + 1))
+                res.add((posX, posY + i + 1))
                 break
         # left-up
-        for i in range(min(self.posX, 7 - self.posY)):
-            if board[self.posX - 1 - i][self.posY + i + 1] == None:
-                res.add((self.posX - 1 - i, self.posY + i + 1))
+        for i in range(min(posX, 7 - posY)):
+            if board[posX - 1 - i][posY + i + 1] == None:
+                res.add((posX - 1 - i, posY + i + 1))
             else:
-                res.add((self.posX - 1 - i, self.posY + i + 1))
+                res.add((posX - 1 - i, posY + i + 1))
                 break
         # right-up
-        for i in range(min(7 - self.posX, 7 - self.posY)):
-            if board[self.posX + i + 1][self.posY + i + 1] == None:
-                res.add((self.posX + i + 1, self.posY + i + 1))
+        for i in range(min(7 - posX, 7 - posY)):
+            if board[posX + i + 1][posY + i + 1] == None:
+                res.add((posX + i + 1, posY + i + 1))
             else:
-                res.add((self.posX + i + 1, self.posY + i + 1))
+                res.add((posX + i + 1, posY + i + 1))
                 break
         # right-down
-        for i in range(min(7 - self.posX, self.posY)):
-            if board[self.posX + i + 1][self.posY - i - 1] == None:
-                res.add((self.posX + i + 1, self.posY - i - 1))
+        for i in range(min(7 - posX, posY)):
+            if board[posX + i + 1][posY - i - 1] == None:
+                res.add((posX + i + 1, posY - i - 1))
             else:
-                res.add((self.posX + i + 1, self.posY - i - 1))
+                res.add((posX + i + 1, posY - i - 1))
                 break
         # left-down
-        for i in range(min(self.posX, self.posY)):
-            if board[self.posX - i - 1][self.posY - i - 1] == None:
-                res.add((self.posX - i - 1, self.posY - i - 1))
+        for i in range(min(posX, posY)):
+            if board[posX - i - 1][posY - i - 1] == None:
+                res.add((posX - i - 1, posY - i - 1))
             else:
-                res.add((self.posX - i - 1, self.posY - i - 1))
+                res.add((posX - i - 1, posY - i - 1))
                 break
         return res
     

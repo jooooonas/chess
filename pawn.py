@@ -29,13 +29,14 @@ class Pawn(Piece):
     def kick(self, x, y, board):
         print("I'm a stub")
 
-    def covered_spots(self, _):
-        if (self.posX == 0):
-            return {(self.posX + 1, self.posY)}
-        elif (self.posX == 7):
-            return {(self.posX - 1, self.posY)}
+    @staticmethod
+    def covered_spots(posX, posY, _):
+        if (posX == 0):
+            return {(posX + 1, posY)}
+        elif (posX == 7):
+            return {(posX - 1, posY)}
         else:
-            return {(self.posX + 1, self.posY), (self.posX - 1, self.posY)}
+            return {(posX + 1, posY), (posX - 1, posY)}
 
     def __repr__(self):
         return "Pawn"

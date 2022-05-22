@@ -5,7 +5,6 @@ from queen import Queen
 from king import King
 from bishop import Bishop
 from knight import Knight
-from check import check_mate
 
 # global variables
 running = 1
