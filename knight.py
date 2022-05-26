@@ -9,9 +9,6 @@ class Knight(Piece):
         return (((abs(x - self.posX) == 1 and abs(y - self.posY) == 2)
         or (abs(x - self.posX) == 2 and abs(y - self.posY) == 1)) and
         super().check_move(x, y))
-    
-    def kick(self, x, y, board):
-        print("I'm a stub")
 
     @staticmethod
     def covered_spots(posX, posY, board):

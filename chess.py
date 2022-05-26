@@ -5,6 +5,7 @@ from queen import Queen
 from king import King
 from bishop import Bishop
 from knight import Knight
+from check import *
 
 # global variables
 running = 1
@@ -42,11 +43,21 @@ def ask_move():
     
 def print_board(board):
     for temp in board:
-        print(temp)
+        for temp2 in temp:
+            print("|" + str(temp2), end='')
+        print("|")
     print("\n")
 
-def check():
-    return
+def check(king):
+    check_dict = create_check_dict(board, colour[player], 1)
+    if check_dict[0].get((king.posX, king.posY)) != None:
+        return check_mate(board, check_dict, colour[player], king)
+    return False
+
+def game_over():
+    print("GAME OVER")
+    print(player_names[player] + " has won! Congratulations!")
+    exit()
 
 print("Welcome to this beatiful game of chess!")
 print("Player 1 is white and player 2 is black.")
@@ -58,6 +69,7 @@ print("Have fun!\n")
 while (running):
 
     print_board(board)
+    kings = (board[4][0], board[4][7])
     
     while (1):
         res = ask_move()
@@ -81,7 +93,9 @@ while (running):
                 board[res[1][0]][res[1][1]] = piece
                 break
 
-    check()
+    if not check(kings[player]):
+        game_over()
+
     player = (player + 1) % 2
 
 

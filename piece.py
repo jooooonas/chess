@@ -28,28 +28,27 @@ class Piece(ABC):
             return False
 
     # moves piece to position x, y if valid move for kicking
-    @abstractmethod
     def kick(self, x, y, board):
-        pass
+        return self.move(x, y, board)
 
     # helper function for straight moving pieces
     def check_move_straight(self, x, y, board):
         # check whether no piece is in the way
         if y == self.posY and x - self.posX < 0: # left
-            for i in range(self.posX - x):
-                if board[x + i][y] != None:
+            for i in range(self.posX - x - 1):
+                if board[x + i + 1][y] != None:
                     return False
         elif y == self.posY: # right
-            for i in range(x - self.posX):
-                if board[x - i][y] != None:
+            for i in range(x - self.posX - 1):
+                if board[x - i - 1][y] != None:
                     return False
         elif x == self.posX and y - self.posY < 0: # down
-            for i in range(self.posY - y):
-                if board[x][y + i] != None:
+            for i in range(self.posY - y - 1):
+                if board[x][y + i + 1] != None:
                     return False
         elif x == self.posX: # up
-            for i in range(y - self.posY):
-                if board[x][y - i] != None:
+            for i in range(y - self.posY - 1):
+                if board[x][y - i - 1] != None:
                     return False
         else:
             return False
@@ -58,20 +57,20 @@ class Piece(ABC):
     # helper function for diagonale moving pieces
     def check_move_diagonale(self, x, y, board):
         if x - self.posX == y - self.posY and x - self.posX < 0: # direction: left - down
-            for i in range(self.posX - x):
-                if board[x + i][y + i] != None:
+            for i in range(self.posX - x - 1):
+                if board[x + i + 1][y + i + 1] != None:
                     return False
         elif x - self.posX == y - self.posY and x - self.posX > 0: # direction: right - up
-            for i in range(x - self.posX):
-                if board[x - i][y - i] != None:
+            for i in range(x - self.posX - 1):
+                if board[x - i - 1][y - i - 1] != None:
                     return False
         elif x - self.posX == self.posY - y and x - self.posX < 0: # direction left - up
-            for i in range(self.posX - x):
-                if board[x + i][y - i] != None:
+            for i in range(self.posX - x - 1):
+                if board[x + i + 1][y - i - 1] != None:
                     return False
         elif x - self.posX == self.posY - y: # direction right - down
-            for i in range(x - self.posX):
-                if board[x - i][y + i] != None:
+            for i in range(x - self.posX - 1):
+                if board[x - i - 1][y + i + 1] != None:
                     return False
         else:
             return False

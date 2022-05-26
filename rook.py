@@ -11,9 +11,6 @@ class Rook(Piece):
     def check_move(self, x, y, board):
         # check whether rook stays on chessboard
         return super().check_move(x, y) and super().check_move_straight(x, y, board)
-    
-    def kick(self, x, y, board):
-        print("I'm a stub")
 
     @staticmethod
     def covered_spots(posX, posY, board):

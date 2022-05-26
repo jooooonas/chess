@@ -73,9 +73,6 @@ class Queen(Piece):
                 res.add((posX - i - 1, posY - i - 1))
                 break
         return res
-    
-    def kick(self, x, y, board):
-        print("I'm a stub")
         
     def __repr__(self):
         return "Queen"

@@ -25,9 +25,20 @@ class Pawn(Piece):
                 if result:
                     self.untouched = 0
                     return result
-    
+
     def kick(self, x, y, board):
-        print("I'm a stub")
+        # direction: white goes y + 1 but black goes y - 1
+        direction = 1
+        if self.colour == 'b':
+            direction = -1
+        # check if it is legitimate kicking move
+        if ((x == self.posX - 1 or x == self.posX + 1) and
+        y == self.posY + direction and super().check_move(x, y)):
+            self.posX = x
+            self.posY = y
+            return True
+        return False
+
 
     @staticmethod
     def covered_spots(posX, posY, board):

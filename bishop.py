@@ -7,9 +7,6 @@ class Bishop(Piece):
 
     def check_move(self, x, y, board):
         return super().check_move_diagonale(x, y, board) and super().check_move(x, y)
-    
-    def kick(self, x, y, board):
-        print("I'm a stub")
 
     @staticmethod
     def covered_spots(posX, posY, board):
