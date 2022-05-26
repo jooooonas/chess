@@ -30,13 +30,17 @@ class Pawn(Piece):
         print("I'm a stub")
 
     @staticmethod
-    def covered_spots(posX, posY, _):
+    def covered_spots(posX, posY, board):
+        # direction: white goes y + 1 but black goes y - 1
+        direction = 1
+        if board[posX][posY].colour == 'b':
+            direction = -1
         if (posX == 0):
-            return {(posX + 1, posY)}
+            return {(posX + 1, posY + direction)}
         elif (posX == 7):
-            return {(posX - 1, posY)}
+            return {(posX - 1, posY + direction)}
         else:
-            return {(posX + 1, posY), (posX - 1, posY)}
+            return {(posX + 1, posY + direction), (posX - 1, posY + direction)}
 
     def __repr__(self):
         return "Pawn"

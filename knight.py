@@ -21,7 +21,7 @@ class Knight(Piece):
         (posX + 2, posY - 1), (posX + 1, posY - 2),
         (posX - 1, posY - 2), (posX - 2, posY - 1)}
         # now remove the invalid ones
-        for tmp in res:
+        for tmp in res.copy():
             if (tmp[0] < 0 or tmp[0] > 7 or tmp[1] < 0 or tmp[1] > 7):
                 res.remove(tmp)
         return res

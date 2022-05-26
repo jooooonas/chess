@@ -25,9 +25,9 @@ class King(Piece):
         elif posX == 0 and posY == 0:
             res = {(1, 0), (1, 1), (0, 1)}
         elif posX == 7:
-            res = {(7, posY - 1), (7, posY + 1), (6, posY - 1), (6, posY), (6, posY - 1)}
+            res = {(7, posY - 1), (7, posY + 1), (6, posY - 1), (6, posY), (6, posY + 1)}
         elif posX == 0:
-            res = {(0, posY - 1), (0, posY + 1), (1, posY - 1), (1, posY), (1, posY - 1)}
+            res = {(0, posY - 1), (0, posY + 1), (1, posY - 1), (1, posY), (1, posY + 1)}
         elif posY == 7:
             res = {(posX - 1, 7), (posX + 1, 7), (posX - 1, 6), (posX, 6), (posX + 1, 6)}
         elif posY == 0:

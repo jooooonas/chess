@@ -18,11 +18,17 @@ def create_check_dict(board, colour):
             if board[j][i] != None and board[j][i].colour == colour:
                 set = board[j][i].covered_spots(j, i, board)
                 for field in set:
-                    dict1.update({field: dict1.get(field).union(board[j][i])})
+                    try:
+                        dict1.update({field: dict1.get(field).union({board[j][i]})})
+                    except AttributeError:
+                        dict1.update({field: {board[j][i]}})
             elif board[j][i] != None and board[j][i].colour != colour:
                 set = board[j][i].covered_spots(j, i, board)
                 for field in set:
-                    dict2.update({field: dict2.get(field).union(board[j][i])})
+                    try:
+                        dict2.update({field: dict2.get(field).union({board[j][i]})})
+                    except AttributeError:
+                        dict2.update({field: {board[j][i]}})
     return (dict1, dict2)
 
 def update_helper_straight(board, oldX, oldY, check_dict, p):
@@ -57,7 +63,7 @@ def update_helper_diagonale(board, oldX, oldY, check_dict, p):
     if oldX < p.posX and oldY < p.posY:
         for i in range(min(oldX, oldY)):
             covered_by = check_dict.get((oldX - i - 1, oldY - i - 1)).union(p)
-            check_dict.update({(oldX - i - 1 oldY - i - 1): covered_by})
+            check_dict.update({(oldX - i - 1, oldY - i - 1): covered_by})
             if board[oldX - i - 1][oldY - i - 1] != None:
                 break
     elif oldX < p.posX and oldY > p.posY:
@@ -104,18 +110,50 @@ def update_dict(board, piece, oldX, oldY, check_dict):
             update_helper_diagonale(board, oldX, oldY, check_dict[1], p)
             update_helper_straight(board, oldX, oldY, check_dict[1], p)
     # update the spots covered by moved piece as well
-    # FUNKTIONIERT DAS? COVERED_SPOTS IST STATIC ABER AUFRUF DURCH "p.cove..." FINDER DAS DIE RICHTIGE KLASSE?
+    # FUNKTIONIERT DAS? COVERED_SPOTS IST STATIC ABER AUFRUF DURCH "p.cove..." FINDET DAS DIE RICHTIGE KLASSE?
     # first remove old covered spots
-    covered_spots = p.covered_spots(oldX, oldY, board)
+    covered_spots = piece.covered_spots(oldX, oldY, board)
     for spot in covered_spots:
         check_dict[0].update({spot: (check_dict[0].get(spot)).discard(p)})
     # second add new covered spots
-    covered_spots = p.covered_spots(p.posX, p.posY, board)
+    covered_spots = piece.covered_spots(piece.posX, piece.posY, board)
     for spot in covered_spots:
         check_dict[0].update({spot: check_dict[0].get(spot).union(p)})
+    # check if moved piece is defending some spots
+    for piece in check_dict[0].get((piece.posX, piece.posY)):
+        print("TODO")
+    for piece in check_dict[1].get((piece.posX, piece.posY)):
+        print("TODO")
+
 
 # chess_board: 2D array of chesspieces
 # check_board: 2D array of all spots which are covered
 # colour: colour of attacking player
-def check_mate(chess_board, check_dict, colour):
-
+# king: king of defending player
+def check_mate(chess_board, check_dict, colour, king):
+    for (x, y) in check_dict[1]:
+        for piece in check_dict[1].get((x, y)):
+            # Pawn is only allowed to go diagonale if there is something to kick or "en passant"
+            # ==> otherwise continue
+            if ((type(piece) == Pawn and chess_board[x][y] == None) or 
+            (chess_board[x][y] != None and chess_board[x][y].colour == colour)):
+                continue
+            tmp = chess_board[x][y]
+            oldX = piece.posX
+            oldY = piece.posY
+            piece.posY = y
+            piece.posX = x
+            chess_board[x][y] = piece
+            chess_board[piece.posX][piece.posY] = None
+            new_dict = create_check_dict(chess_board, piece.colour)
+            chess_board[x][y] = tmp
+            chess_board[piece.posX][piece.posY] = piece
+            if new_dict[0].get(king.posX, king.posY) == None:
+                # dont change posY and posX earlier because if piece is king then king.posX in line above is leading to failure
+                piece.posY = oldY
+                piece.posX = oldX
+                return False
+            piece.posY = oldY
+            piece.posX = oldX
+    # also check if a pawn can prevent check mate by going straight
+    # straight moves for pawn are not added to check_dict
