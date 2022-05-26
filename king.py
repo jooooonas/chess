@@ -35,9 +35,9 @@ class King(Piece):
         else:
             for i in range(3):
                 for j in range(3):
-                    res.add(posX + 1 - i, posY + 1 - j)
+                    res.add((posX + 1 - i, posY + 1 - j))
             # remove spot where king is on
-            res.remove(posX, posY)
+            res.remove((posX, posY))
         return res
         
     def __repr__(self):

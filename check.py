@@ -9,8 +9,10 @@ from knight import Knight
 # creating a dict mapping from field to piece, whenever the piece covers this field
 # board: chess board from which the dict is created
 # colour: colour of attacker
+# oneOrTwo: if this integer is zero -> function only return dict for attacking player
+#           if this integer is one -> function returns both dicts
 # return value: tuple of dict for attacking player and dict for defending player
-def create_check_dict(board, colour):
+def create_check_dict(board, colour, oneOrTwo):
     dict1 = {}
     dict2 = {}
     for i in range(7):
@@ -22,14 +24,14 @@ def create_check_dict(board, colour):
                         dict1.update({field: dict1.get(field).union({board[j][i]})})
                     except AttributeError:
                         dict1.update({field: {board[j][i]}})
-            elif board[j][i] != None and board[j][i].colour != colour:
+            elif oneOrTwo and board[j][i] != None and board[j][i].colour != colour:
                 set = board[j][i].covered_spots(j, i, board)
                 for field in set:
                     try:
                         dict2.update({field: dict2.get(field).union({board[j][i]})})
                     except AttributeError:
                         dict2.update({field: {board[j][i]}})
-    return (dict1, dict2)
+    return (dict1, dict2) if oneOrTwo else dict1
 
 def update_helper_straight(board, oldX, oldY, check_dict, p):
     if oldX == p.posX:
@@ -136,24 +138,25 @@ def check_mate(chess_board, check_dict, colour, king):
             # Pawn is only allowed to go diagonale if there is something to kick or "en passant"
             # ==> otherwise continue
             if ((type(piece) == Pawn and chess_board[x][y] == None) or 
-            (chess_board[x][y] != None and chess_board[x][y].colour == colour)):
+            (chess_board[x][y] != None and chess_board[x][y].colour != colour)):
                 continue
             tmp = chess_board[x][y]
             oldX = piece.posX
             oldY = piece.posY
+            chess_board[piece.posX][piece.posY] = None
+            chess_board[x][y] = piece
             piece.posY = y
             piece.posX = x
-            chess_board[x][y] = piece
-            chess_board[piece.posX][piece.posY] = None
-            new_dict = create_check_dict(chess_board, piece.colour)
+            new_dict = create_check_dict(chess_board, colour, 0)
             chess_board[x][y] = tmp
-            chess_board[piece.posX][piece.posY] = piece
-            if new_dict[0].get(king.posX, king.posY) == None:
+            chess_board[oldX][oldY] = piece
+            if new_dict.get((king.posX, king.posY)) == None:
                 # dont change posY and posX earlier because if piece is king then king.posX in line above is leading to failure
                 piece.posY = oldY
                 piece.posX = oldX
                 return False
             piece.posY = oldY
             piece.posX = oldX
+    return True
     # also check if a pawn can prevent check mate by going straight
     # straight moves for pawn are not added to check_dict
