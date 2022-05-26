@@ -93,7 +93,7 @@ while (running):
                 board[res[1][0]][res[1][1]] = piece
                 break
 
-    if not check(kings[player]):
+    if check(kings[(player + 1) % 2]):
         game_over()
 
     player = (player + 1) % 2
