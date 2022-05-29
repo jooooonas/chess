@@ -1,11 +1,49 @@
 from piece import Piece
+from check import *
 
 class King(Piece):
 
     def __init__(self, x, y, c):
         super().__init__(x, y, c)
 
+    # returns the enemies' colour
+    def enemy_colour(self):
+        if self.colour == 'w':
+            return 'b'
+        else:
+            return 'w'
+
     def check_move(self, x, y, board):
+        # check castling
+        if ((x == 2 or x == 6) and self.untouched == 1
+        (y == 0 or y == 7) and y == self.posY and self.posX == 4):
+            dict = create_check_dict(board, self.enemy_colour, 0)
+            if self.posX - 2 == x:
+                for i in range(5):
+                    if dict.get((i, y)) != None:
+                        return False
+                if (board[self.posX - 1][y] != None or board[self.posX - 2][y] != None or board[self.posX - 3][y] != None
+                or self.untouched != 1 or type(board[0][y]) != Rook or board[0][y].untouched != 1):
+                    return False
+                self.posX = x
+                self.posY = y
+                self.untouched = board[0][y].untouched = 0
+                board[0][y].posX = 3
+                board[3][y] = board[0][y]
+                board[0][y] = None
+            else:
+                for i in range(5):
+                    if dict.get((7 - i, y)) != None:
+                        return False
+                if (board[6][y] != None or board[5][y] != None or self.untouched != 1 or
+                type(board[7][y]) != Rook or board[7][y].untouched != 1):
+                    return False
+                self.posX = x
+                self.posY = y
+                self.untouched = board[7][y].untouched = 0
+                board[7][y].posX = 5
+                board[5][y] = board[7][y]
+                board[7][y] = None
         # maximum distance: 1
         return (abs(x - self.posX) <= 1 and abs(y - self.posY) <= 1
         and super().check_move(x, y))

@@ -1,5 +1,3 @@
-- kick functionality
-- castling
 - en passant for kick() and covered_spots()
 - stalemate
 - promotion

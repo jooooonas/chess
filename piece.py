@@ -2,6 +2,9 @@ from abc import abstractmethod, ABC
 
 
 class Piece(ABC):
+    # 0: piece has moved
+    # 1: piece hasn't moved yet
+    untouched = 1
 
     @abstractmethod
     # x, y defines starting position of chesspiece
@@ -22,6 +25,7 @@ class Piece(ABC):
         if self.check_move(x, y, board):
             self.posX = x
             self.posY = y
+            self.untouched = 0
             return True
         else:
             self.print_error(self.__class__.__name__, x, y)

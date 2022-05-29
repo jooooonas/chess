@@ -1,9 +1,6 @@
 from piece import Piece
 
 class Pawn(Piece):
-    # 0: pawn has moved
-    # 1: pawn hasn't moved yet
-    untouched = 1
 
     def __init__(self, x, y, c):
         super().__init__(x, y, c)
@@ -13,18 +10,12 @@ class Pawn(Piece):
             if self.untouched:
                 return x == self.posX and (y == 2 or y == 3) and board[x][2] == None
             else:
-                result = x == self.posX and y == self.posY + 1 and y <= 7
-                if result:
-                    self.untouched = 0
-                    return result
+                return x == self.posX and y == self.posY + 1 and y <= 7
         else:
             if self.untouched:
                 return x == self.posX and (y == 5 or y == 4) and board[x][5] == None
             else:
-                result = x == self.posX and y == self.posY - 1 and y >= 0
-                if result:
-                    self.untouched = 0
-                    return result
+                return x == self.posX and y == self.posY - 1 and y >= 0
 
     def kick(self, x, y, board):
         # direction: white goes y + 1 but black goes y - 1
@@ -36,6 +27,7 @@ class Pawn(Piece):
         y == self.posY + direction and super().check_move(x, y)):
             self.posX = x
             self.posY = y
+            self.untouched = 0
             return True
         return False
 
