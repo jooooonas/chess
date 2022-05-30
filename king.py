@@ -82,6 +82,10 @@ class King(Piece):
                     res.add((posX + 1 - i, posY + 1 - j))
             # remove spot where king is on
             res.remove((posX, posY))
+        # remove spots where king would cuddle
+        for (x, y) in res.copy():
+            if not board[posX][posY].no_cuddling(x, y, board):
+                res.remove((x, y))
         return res
         
     def __repr__(self):

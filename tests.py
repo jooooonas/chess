@@ -28,8 +28,8 @@ board_start = [
 board = [
     [None, None, None, None, None, None, None, None],
     [None, None, None, King(1, 3, 'b'), None, None, None, None],
-    [None, None, Queen(2, 2, 'w'), None, None, None, None, None],
-    [None, Pawn(3, 1, 'w'), None, None, None, None, None, None],
+    [None, None, None, None, None, None, None, None],
+    [None, None, None, King(3, 3, 'w'), None, None, None, None],
     [None, None, None, None, None, None, None, None],
     [None, None, None, None, None, None, None, None],
     [None, None, None, None, None, None, None, None],
@@ -44,12 +44,24 @@ board_kick = [
     [None, None, None, None, None, Knight(4, 5, 'b'), None, None],
     [None, None, None, None, None, None, None, None],
     [None, None, None, Bishop(6, 3, 'w'), None, None, None, None],
-    [None, None, None, King(7, 3, 'b'), None, None, None, None]
+    [None, None, None, King(7, 3, 'b'), None, King(7, 4, 'w'), None, None]
 ]
+
+def test_board_consistency(board):
+    for i in range(8):
+        for j in range(8):
+            if board[i][j] != None and (board[i][j].posX != i or board[i][j].posY != j):
+                print(str(board[i][j]) + " on position x = " + str(i) + ", y = " +
+                str(j) + "is not consitent to posX and posY: " + str(board[i][j].posX)
+                + ", " + str(board[i][j].posY))
+                return False
 
 def test_check_mate():
     covered_spots = create_check_dict(board, 'w', 1)
     return check_mate(board, covered_spots, 'w', board[1][3])
+
+def get_covered_spots():
+    print(create_check_dict(board, 'w', 1))
 
 def test_kick():
     board_copy = board_kick.copy()

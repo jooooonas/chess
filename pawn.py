@@ -5,17 +5,28 @@ class Pawn(Piece):
     def __init__(self, x, y, c):
         super().__init__(x, y, c)
 
+    def promote(self):
+        return
+
     def check_move(self, x, y, board):
         if self.colour == 'w':
             if self.untouched:
                 return x == self.posX and (y == 2 or y == 3) and board[x][2] == None
             else:
-                return x == self.posX and y == self.posY + 1 and y <= 7
+                res = x == self.posX and y == self.posY + 1 and y <= 7
+                # promotion
+                if res and y == 7:
+                    self.promote()
+                return res
         else:
             if self.untouched:
                 return x == self.posX and (y == 5 or y == 4) and board[x][5] == None
             else:
-                return x == self.posX and y == self.posY - 1 and y >= 0
+                res = x == self.posX and y == self.posY - 1 and y >= 0
+                # promotion
+                if res and y == 0:
+                    self.promote()
+                return res
 
     def kick(self, x, y, board):
         # direction: white goes y + 1 but black goes y - 1
