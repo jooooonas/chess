@@ -13,6 +13,13 @@ class King(Piece):
         else:
             return 'w'
 
+    def no_cuddling(self, x, y, board):
+        for row in board:
+            for piece in row:
+                if type(piece) == King and piece != self:
+                    return abs(piece.posX - x) > 1 or abs(piece.posY - y) > 1
+
+
     def check_move(self, x, y, board):
         # check castling
         if ((x == 2 or x == 6) and self.untouched == 1
@@ -31,6 +38,7 @@ class King(Piece):
                 board[0][y].posX = 3
                 board[3][y] = board[0][y]
                 board[0][y] = None
+                return True
             else:
                 for i in range(5):
                     if dict.get((7 - i, y)) != None:
@@ -44,9 +52,10 @@ class King(Piece):
                 board[7][y].posX = 5
                 board[5][y] = board[7][y]
                 board[7][y] = None
+                return True
         # maximum distance: 1
         return (abs(x - self.posX) <= 1 and abs(y - self.posY) <= 1
-        and super().check_move(x, y))
+        and super().check_move(x, y) and self.no_cuddling(x, y, board))
 
     @staticmethod
     def covered_spots(posX, posY, board):
