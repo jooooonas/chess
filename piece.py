@@ -6,14 +6,19 @@ class Piece(ABC):
     # 1: piece hasn't moved yet
     untouched = 1
 
-    @abstractmethod
     # x, y defines starting position of chesspiece
     # c defines colour (black|white)
+    @abstractmethod
     def __init__(self, x, y, c):
         self.posX = x
         self.posY = y
         self.colour = c
         return
+
+    # returns a copy of the piece
+    @abstractmethod
+    def copy(self):
+        pass
 
     # checks if move is valid for this type of chesspiece
     def check_move(self, x, y):

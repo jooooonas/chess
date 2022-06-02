@@ -5,6 +5,9 @@ class Bishop(Piece):
     def __init__(self, x, y, c):
         super().__init__(x, y, c)
 
+    def copy(self):
+        return Bishop(self.posX, self.posY, self.colour)
+
     def check_move(self, x, y, board):
         return super().check_move_diagonale(x, y, board) and super().check_move(x, y)
 

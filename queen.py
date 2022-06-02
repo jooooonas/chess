@@ -5,6 +5,9 @@ class Queen(Piece):
     def __init__(self, x, y, c):
         super().__init__(x, y, c)
 
+    def copy(self):
+        return Queen(self.posX, self.posY, self.colour)
+
     def check_move(self, x, y, board):
         # check whether queen stays on chessboard
         return (super().check_move(x, y) and

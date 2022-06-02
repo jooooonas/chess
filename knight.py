@@ -5,6 +5,9 @@ class Knight(Piece):
     def __init__(self, x, y, c):
         super().__init__(x, y, c)
 
+    def copy(self):
+        return Knight(self.posX, self.posY, self.colour)
+
     def check_move(self, x, y, board):
         return (((abs(x - self.posX) == 1 and abs(y - self.posY) == 2)
         or (abs(x - self.posX) == 2 and abs(y - self.posY) == 1)) and

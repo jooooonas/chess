@@ -6,6 +6,9 @@ class King(Piece):
     def __init__(self, x, y, c):
         super().__init__(x, y, c)
 
+    def copy(self):
+        return King(self.posX, self.posY, self.colour)
+
     # returns the enemies' colour
     def enemy_colour(self):
         if self.colour == 'w':
@@ -22,7 +25,7 @@ class King(Piece):
 
     def check_move(self, x, y, board):
         # check castling
-        if ((x == 2 or x == 6) and self.untouched == 1
+        if ((x == 2 or x == 6) and self.untouched == 1 and
         (y == 0 or y == 7) and y == self.posY and self.posX == 4):
             dict = create_check_dict(board, self.enemy_colour, 0)
             if self.posX - 2 == x:

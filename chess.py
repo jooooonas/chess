@@ -6,25 +6,38 @@ from king import King
 from bishop import Bishop
 from knight import Knight
 from check import *
+from tests import *
+
+
+# set up board
+# board = [
+#     [Rook(0, 0, "w"), Pawn(0, 1, "w"), None, None, None, None, Pawn(0, 6, "b"), Rook(0, 7, "b")],
+#     [Knight(1, 0, "w"), Pawn(1, 1, "w"), None, None, None, None, Pawn(1, 6, "b"), Knight(1, 7, "b")],
+#     [Bishop(2, 0, "w"), Pawn(2, 1, "w"), None, None, None, None, Pawn(2, 6, "b"), Bishop(2, 7, "b")],
+#     [Queen(3, 0, "w"), Pawn(3, 1, "w"), None, None, None, None, Pawn(3, 6, "b"), Queen(3, 7, "b")],
+#     [King(4, 0, "w"), Pawn(4, 1, "w"), None, None, None, None, Pawn(4, 6, "b"), King(4, 7, "b")],
+#     [Bishop(5, 0, "w"), Pawn(5, 1, "w"), None, None, None, None, Pawn(5, 6, "b"), Bishop(5, 7, "b")],
+#     [Knight(6, 0, "w"), Pawn(6, 1, "w"), None, None, None, None, Pawn(6, 6, "b"), Knight(6, 7, "b")],
+#     [Rook(7, 0, "w"), Pawn(7, 1, "w"), None, None, None, None, Pawn(7, 6, "b"), Rook(7, 7, "b")]
+# ]
+board = [
+    [Rook(0, 0, "w"), Pawn(0, 1, "w"), None, None, None, None, Pawn(0, 6, "b"), Rook(0, 7, "b")],
+    [Knight(1, 0, "w"), Pawn(1, 1, "w"), None, None, None, None, Pawn(1, 6, "b"), None],
+    [Bishop(2, 0, "w"), Pawn(2, 1, "w"), None, None, None, None, Pawn(2, 6, "w"), None],
+    [Queen(3, 0, "w"), Pawn(3, 1, "w"), King(3, 2, "w"), None, None, None, None, Queen(3, 7, "b")],
+    [None, None, None, None, None, None, Pawn(4, 6, "b"), King(4, 7, "b")],
+    [Bishop(5, 0, "w"), Pawn(5, 1, "w"), None, None, None, None, Pawn(5, 6, "b"), Bishop(5, 7, "b")],
+    [Knight(6, 0, "w"), Pawn(6, 1, "w"), None, None, None, None, Pawn(6, 6, "b"), Knight(6, 7, "b")],
+    [Rook(7, 0, "w"), Pawn(7, 1, "w"), None, None, None, None, Pawn(7, 6, "b"), Rook(7, 7, "b")]
+]
 
 # global variables
 running = 1
 player = 0
 colour = ['w', 'b']
 player_names = ['Player one', 'Player two']
-
-# set up board
-board = [
-    [Rook(0, 0, "w"), Pawn(0, 1, "w"), None, None, None, None, Pawn(0, 6, "b"), Rook(0, 7, "b")],
-    [Knight(1, 0, "w"), Pawn(1, 1, "w"), None, None, None, None, Pawn(1, 6, "b"), Knight(1, 7, "b")],
-    [Bishop(2, 0, "w"), Pawn(2, 1, "w"), None, None, None, None, Pawn(2, 6, "b"), Bishop(2, 7, "b")],
-    [Queen(3, 0, "w"), Pawn(3, 1, "w"), None, None, None, None, Pawn(3, 6, "b"), Queen(3, 7, "b")],
-    [King(4, 0, "w"), Pawn(4, 1, "w"), None, None, None, None, Pawn(4, 6, "b"), King(4, 7, "b")],
-    [Bishop(5, 0, "w"), Pawn(5, 1, "w"), None, None, None, None, Pawn(5, 6, "b"), Bishop(5, 7, "b")],
-    [Knight(6, 0, "w"), Pawn(6, 1, "w"), None, None, None, None, Pawn(6, 6, "b"), Knight(6, 7, "b")],
-    [Rook(7, 0, "w"), Pawn(7, 1, "w"), None, None, None, None, Pawn(7, 6, "b"), Rook(7, 7, "b")]
-]
-
+# kings = (board[4][0], board[4][7])
+kings = (board[3][2], board[4][7])
 
 def getCoordinates(string):
     values = string.split(", ")
@@ -48,10 +61,71 @@ def print_board(board):
         print("|")
     print("\n")
 
+def single_turn():
+    while (1):
+        print("\nConsistency-test: " + str(test_board_consistency(board)) + "\n")
+        res = ask_move()
+        piece = board[res[0][0]][res[0][1]]
+        piece_dest = board[res[1][0]][res[1][1]]
+        # check if player moves his own colour:
+        if piece == None or piece.colour != colour[player]:
+            continue
+        # kick or move?
+        if piece_dest != None:
+            # check for correct input
+            if piece_dest.colour != colour[player]:
+                piece.kick(res[1][0], res[1][1], board)
+                tmp = board[res[0][0]][res[0][1]]
+                board[res[0][0]][res[0][1]] = None
+                board[res[1][0]][res[1][1]] = tmp
+                break
+        else:
+            # check for correct input
+            if piece != None and piece.colour == colour[player] and piece.move(res[1][0], res[1][1], board):
+                tmp = board[res[0][0]][res[0][1]]
+                board[res[0][0]][res[0][1]] = None
+                board[res[1][0]][res[1][1]] = tmp
+                break
+
+def board_copy():
+    global board
+    copy = [[], [], [], [], [], [], [], []]
+    for i in range(8):
+        for j in range(8):
+            if board[i][j] == None:
+                copy[i].append(board[i][j])
+            else:
+                copy[i].append(board[i][j].copy())
+    return copy
+
+
 def check(king):
+    global player
+    global board
     check_dict = create_check_dict(board, colour[player], 1)
+    print("Schach or nah?")
+    print(check_dict[0])
     if check_dict[0].get((king.posX, king.posY)) != None:
-        return check_mate(board, check_dict, colour[player], king)
+        if check_mate(board, check_dict, colour[player], king):
+            return True
+        print("Check! Safe your king!")
+        player = (player + 1) % 2
+        print_board(board)
+        while(1):
+            copy = board_copy()
+            single_turn()
+            print("Da simma")
+            print(board)
+            check_dict = create_check_dict(board, colour[(player + 1) % 2], 1)
+            print(check_dict)
+            if check_dict[0].get((king.posX, king.posY)) == None:
+                if check(kings[(player + 1) % 2]):
+                    game_over()
+                break
+            print(copy)
+            board = copy
+            print(board)
+            print("You have to save your king!")
     return False
 
 def game_over():
@@ -69,34 +143,12 @@ print("Have fun!\n")
 while (running):
 
     print_board(board)
-    kings = (board[4][0], board[4][7])
     
-    while (1):
-        res = ask_move()
-        piece = board[res[0][0]][res[0][1]]
-        piece_dest = board[res[1][0]][res[1][1]]
-        # check if player moves his own colour:
-        if piece == None or piece.colour != colour[player]:
-            continue
-        # kick or move?
-        if piece_dest != None:
-            # check for correct input
-            if piece_dest.colour != colour[player]:
-                piece.kick(res[1][0], res[1][1], board)
-                board[res[0][0]][res[0][1]] = None
-                board[res[1][0]][res[1][1]] = piece
-                break
-        else:
-            # check for correct input
-            if piece != None and piece.colour == colour[player] and piece.move(res[1][0], res[1][1], board):
-                board[res[0][0]][res[0][1]] = None
-                board[res[1][0]][res[1][1]] = piece
-                break
+    single_turn()
 
     if check(kings[(player + 1) % 2]):
         game_over()
 
+    print("RAUS HIER")
+
     player = (player + 1) % 2
-
-
-# check for checkmate

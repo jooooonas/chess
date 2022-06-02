@@ -5,6 +5,9 @@ class Rook(Piece):
     def __init__(self, x, y, c):
         super().__init__(x, y, c)
 
+    def copy(self):
+        return Rook(self.posX, self.posY, self.colour)
+
     def __repr__(self):
         return "Rook"
 

@@ -52,9 +52,10 @@ def test_board_consistency(board):
         for j in range(8):
             if board[i][j] != None and (board[i][j].posX != i or board[i][j].posY != j):
                 print(str(board[i][j]) + " on position x = " + str(i) + ", y = " +
-                str(j) + "is not consitent to posX and posY: " + str(board[i][j].posX)
+                str(j) + " is not consistent to posX and posY: " + str(board[i][j].posX)
                 + ", " + str(board[i][j].posY))
                 return False
+    return True
 
 def test_check_mate():
     covered_spots = create_check_dict(board, 'w', 1)

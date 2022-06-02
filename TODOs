@@ -1,6 +1,17 @@
 - en passant for kick() and covered_spots()
 - stalemate
 - promotion
-- check
-- kings arent allowed to cuddle
-- check if King is allowed to move to spot because of enemy king (in covered_spots and in check_move())
+- copy_board in chess.py is not copying the pieces correctly -> inconsistency if posX and posY are changed
+(- kings arent allowed to cuddle
+- check if King is allowed to move to spot because of enemy king (in covered_spots and in check_move()))
+
+Fix bug for following input:
+2, 6
+3, 7
+Q
+
+0, 7
+3, 7
+
+3, 2
+3, 3
