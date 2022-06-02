@@ -5,6 +5,7 @@
 (- kings arent allowed to cuddle
 - check if King is allowed to move to spot because of enemy king (in covered_spots and in check_move()))
 
+Test castling!
 Fix bug for following input:
 2, 6
 3, 7
