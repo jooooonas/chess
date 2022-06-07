@@ -132,21 +132,30 @@ def update_dict(board, piece, oldX, oldY, check_dict):
 # colour: colour of attacking player
 # king: king of defending player
 def check_mate(chess_board, check_dict, colour, king):
+    print(check_dict[1])
     for (x, y) in check_dict[1]:
         for piece in check_dict[1].get((x, y)):
             # Pawn is only allowed to go diagonale if there is something to kick or "en passant"
             # ==> otherwise continue
-            if ((type(piece) == Pawn and chess_board[x][y] == None) or 
+            if ((type(piece) == Pawn and chess_board[x][y] == None and x != piece.posX) or 
             (chess_board[x][y] != None and chess_board[x][y].colour != colour)):
                 continue
+            print(piece.posX, piece.posY, piece.colour)
+            print(x, y)
+            print(chess_board[x][y])
+            # copy important values
             tmp = chess_board[x][y]
             oldX = piece.posX
             oldY = piece.posY
+            # simulate move to x, y
             chess_board[piece.posX][piece.posY] = None
             chess_board[x][y] = piece
             piece.posY = y
             piece.posX = x
+            # create dict
             new_dict = create_check_dict(chess_board, colour, 0)
+            print(king.posX, king.posY)
+            print(new_dict.get((king.posX, king.posY)))
             chess_board[x][y] = tmp
             chess_board[oldX][oldY] = piece
             if new_dict.get((king.posX, king.posY)) == None:

@@ -47,7 +47,7 @@ board_kick = [
     [None, None, None, King(7, 3, 'b'), None, King(7, 4, 'w'), None, None]
 ]
 
-def test_board_consistency(board):
+def test_board_consistency(board, kings):
     for i in range(8):
         for j in range(8):
             if board[i][j] != None and (board[i][j].posX != i or board[i][j].posY != j):
@@ -55,6 +55,13 @@ def test_board_consistency(board):
                 str(j) + " is not consistent to posX and posY: " + str(board[i][j].posX)
                 + ", " + str(board[i][j].posY))
                 return False
+            if type(board[i][j]) == King:
+                if board[i][j].colour == 'w' and kings[0] != board[i][j]:
+                    print("kings[0] != white king on board. Inconsistent!")
+                    return False
+                elif board[i][j].colour == 'b' and kings[1] != board[i][j]:
+                    print("kings[1] != black king on board. Inconsistent!")
+                    return False
     return True
 
 def test_check_mate():
