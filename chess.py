@@ -107,8 +107,6 @@ def check(king, col):
     global player
     global board
     check_dict = create_check_dict(board, col, 1)
-    print(king.posX, king.posY, king.colour)
-    print(check_dict[0].get((king.posX, king.posY)))
     if check_dict[0].get((king.posX, king.posY)) != None:
         # Just check for checkmate if we are checking enemy's king
         if king.colour != colour[player] and check_mate(board, check_dict, col, king):
@@ -148,9 +146,7 @@ while (running):
     while (True):
         print_board(board)
         single_turn()
-        result = not check(kings[player], colour[(player + 1) % 2])
-        print(result)
-        if result:
+        if not check(kings[player], colour[(player + 1) % 2]):
             break
         else:
             board = board_copy(copy)
