@@ -27,7 +27,7 @@ class King(Piece):
         # check castling
         if ((x == 2 or x == 6) and self.untouched == 1 and
         (y == 0 or y == 7) and y == self.posY and self.posX == 4):
-            dict = create_check_dict(board, self.enemy_colour, 0)
+            dict = create_check_dict(board, self.enemy_colour(), 0)
             if self.posX - 2 == x:
                 for i in range(5):
                     if dict.get((i, y)) != None:
